@@ -285,6 +285,7 @@
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
         
         .project-card::after {
@@ -312,6 +313,11 @@
             font-size: 1.6em;
             color: #0096ff;
             margin-bottom: 15px;
+        }
+
+        .project-card:focus {
+            outline: 3px solid rgba(0, 150, 255, 0.35);
+            outline-offset: 2px;
         }
         
         .project-card p {
@@ -612,19 +618,19 @@
         <section class="panel blue-accent">
             <h2>COMPLETED TEST CHAMBERS (PROJECTS)</h2>
             
-            <div class="project-card">
+            <div class="project-card" data-url="https://www.xbox.com/es-AR/games/store/elderand/9PMKJDSDK77C">
                 <h3>ELDERAND</h3>
                 <p><strong>Type:</strong> Metroidvania RPG | <strong>Developer:</strong> Sinergia Games & Mantra | <strong>Publisher:</strong> Graffiti Games</p>
                 <p style="margin-top: 10px;">Helped develop the Elderand XBOX port, fixing bugs, doing QA and optimizing performance.</p>
             </div>
             
-            <div class="project-card">
+            <div class="project-card" data-url="https://www.netflix.com/ar/games/81569948">
                 <h3>STORYTELLER</h3>
                 <p><strong>Type:</strong> Puzzle Game | <strong>Designer:</strong> Daniel Benmergui | <strong>Publisher:</strong> Annapurna Interactive</p>
                 <p style="margin-top: 10px;">Helped develop the various platform ports including the famous and 2023's most downloaded Netflix port.</p>
             </div>
             
-            <div class="project-card">
+            <div class="project-card" data-url="https://www.nintendo.com/es-ar/store/products/we-need-to-go-deeper-switch/?srsltid=AfmBOoqProORjigVsw_KP118cKKiXIUMjIuSTMH7TIF2r6k4QlKBpMaj">
                 <h3>WE NEED TO GO DEEPER</h3>
                 <p><strong>Type:</strong> 2-4 Player Cooperative Submarine Roguelike | <strong>Developer:</strong> Deli Interactive LLC | <strong>Publisher:</strong> Deli & Graffiti Games</p>
                 <p style="margin-top: 10px;">Helped develop the Nintendo Switch port, worked on optimization for the platform and fixed various networking and game breaking bugs.</p>
@@ -636,13 +642,13 @@
                 <p style="margin-top: 10px;">Echoes of the Void is a game-jam 1v1 horror game in which you send "Daredevil-esque" echolocation pulses to "sense" the world around you, avoiding monsters that only move when you can see them and finishing the objective before the other player does it first.</p>
             </div>
             
-            <div class="project-card">
+            <div class="project-card" data-url="https://www.xbox.com/es-es/games/store/SKINWALKER/9N6L0706DFHG">
                 <h3>SKINWALKER: FIRST BLOOD</h3>
                 <p><strong>Type:</strong> Action Slasher Game | <strong>Developer:</strong> Sismo Games | <strong>Publisher:</strong> Team17 | <strong>Release:</strong> 2026</p>
                 <p style="margin-top: 10px;">Led the porting team and helped develop the game, bringing this game to the last and current-gen consoles as well as the Microsoft Store. Greatly improved performance and user experience and worked on AI and behaviors of NPCs in the game. The most technically demanding project to date.</p>
             </div>
             
-            <div class="project-card">
+            <div class="project-card" data-url="https://www.xbox.com/es-AR/games/store/my-little-universe/9MT5C35CCP0Q/0010">
                 <h3>MY LITTLE UNIVERSE</h3>
                 <p><strong>Type:</strong> Mobile Game | <strong>Developer:</strong> Estoty | <strong>Publisher:</strong> SayGames | <strong>Release:</strong> September 2021</p>
                 <p style="margin-top: 10px;">Led the porting team in bringing this game to the last and current-gen consoles as well as the Microsoft Store. The most demanding project in terms of client communication, requirements and team management.</p>
@@ -722,6 +728,29 @@
             panel.style.opacity = '0';
             observer.observe(panel);
         });*/
+
+        // Make project cards clickable when they have a `data-url` attribute.
+        document.querySelectorAll('.project-card').forEach(card => {
+            const url = card.getAttribute('data-url');
+            if (!url) return;
+            // Ensure keyboard and accessibility
+            card.setAttribute('role', 'link');
+            if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
+
+            // Click handler (ignore clicks on real anchors inside)
+            card.addEventListener('click', (e) => {
+                if (e.target.closest('a')) return;
+                window.open(url, '_blank');
+            });
+
+            // Keyboard activation (Enter or Space)
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    window.open(url, '_blank');
+                }
+            });
+        });
     </script>
 </body>
 </html>
