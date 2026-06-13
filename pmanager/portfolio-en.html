@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Benjamin M. Leonardi — Project Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0F1923;
+      --slate:   #1A2A3A;
+      --steel:   #2A6496;
+      --fog:     #8A9BB0;
+      --cream:   #F0EDE6;
+      --white:   #FAFAF8;
+      --gold:    #C9A84C;
+      --divider: #2C3E50;
+      --text:    #1A2430;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(15, 25, 35, 0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.18);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 60px;
+      height: 64px;
+    }
+
+    .nav-brand {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--cream);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-brand span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--fog);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 100px 60px 80px;
+      gap: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(135deg, transparent 0%, rgba(42, 100, 150, 0.08) 100%);
+      pointer-events: none;
+    }
+
+    .hero-left {
+      animation: fadeUp 0.9s ease both;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4rem);
+      line-height: 1.1;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--fog);
+      letter-spacing: 0.04em;
+      margin-bottom: 28px;
+    }
+
+    .hero-bio {
+      font-size: 1rem;
+      color: rgba(240, 237, 230, 0.72);
+      max-width: 480px;
+      line-height: 1.75;
+      margin-bottom: 40px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 26px;
+      border-radius: 2px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    .btn-primary:hover {
+      background: #dbb95a;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--cream);
+      border: 1px solid rgba(240, 237, 230, 0.25);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .hero-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      animation: fadeUp 0.9s 0.2s ease both;
+    }
+
+    .kpi-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px;
+      padding: 28px 24px;
+      transition: border-color 0.2s;
+    }
+
+    .kpi-card:hover { border-color: rgba(201, 168, 76, 0.35); }
+
+    .kpi-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.6rem;
+      color: var(--cream);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .kpi-value span { color: var(--gold); font-size: 1.6rem; }
+
+    .kpi-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fog);
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      padding: 96px 60px;
+    }
+
+    .section-alt { background: var(--cream); }
+
+    .section-dark {
+      background: var(--slate);
+      color: var(--cream);
+    }
+
+    .section-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      margin-bottom: 56px;
+    }
+
+    .section-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.9rem, 3vw, 2.6rem);
+      line-height: 1.15;
+      color: var(--navy);
+    }
+
+    .section-dark h2 { color: var(--cream); }
+    .section-alt h2 { color: var(--navy); }
+
+    .section-sub {
+      font-size: 0.95rem;
+      color: var(--fog);
+      margin-top: 10px;
+      max-width: 560px;
+    }
+
+    .section-dark .section-sub { color: rgba(138, 155, 176, 0.85); }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 148px;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold), rgba(201,168,76,0.15));
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 148px 1fr;
+      gap: 0 40px;
+      margin-bottom: 52px;
+      position: relative;
+    }
+
+    .timeline-item:last-child { margin-bottom: 0; }
+
+    .timeline-date {
+      text-align: right;
+      padding-top: 4px;
+    }
+
+    .timeline-year {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+    }
+
+    .timeline-org {
+      font-size: 0.72rem;
+      color: var(--fog);
+      margin-top: 2px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 143px;
+      top: 8px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--white);
+      z-index: 1;
+    }
+
+    .section-alt .timeline-dot { border-color: var(--cream); }
+
+    .timeline-body { padding-left: 0; }
+
+    .timeline-role {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .timeline-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 2px;
+      background: rgba(42, 100, 150, 0.1);
+      color: var(--steel);
+      border: 1px solid rgba(42, 100, 150, 0.2);
+    }
+
+    .timeline-desc {
+      font-size: 0.92rem;
+      color: #3A4A5A;
+      line-height: 1.75;
+    }
+
+    .timeline-highlights {
+      margin-top: 12px;
+      padding-left: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .timeline-highlights li {
+      font-size: 0.87rem;
+      color: #4A5A6A;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .timeline-highlights li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--white);
+      border: 1px solid rgba(26, 36, 48, 0.1);
+      border-radius: 4px;
+      padding: 32px 28px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .project-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+
+    .project-type {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--steel);
+      margin-bottom: 10px;
+    }
+
+    .project-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .project-meta {
+      font-size: 0.78rem;
+      color: var(--fog);
+      margin-bottom: 14px;
+    }
+
+    .project-desc {
+      font-size: 0.88rem;
+      color: #4A5A6A;
+      line-height: 1.7;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .skill-group {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 4px;
+      padding: 24px 20px;
+    }
+
+    .skill-group-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    .skill-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .skill-list li {
+      font-size: 0.88rem;
+      color: rgba(240, 237, 230, 0.78);
+    }
+
+    /* ── CONTACT ── */
+    .contact-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      padding: 36px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(201, 168, 76, 0.18);
+    }
+
+    .footer-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1rem;
+      color: var(--cream);
+    }
+
+    .footer-note {
+      font-size: 0.75rem;
+      color: var(--fog);
+    }
+
+    /* ── LANG TOGGLE ── */
+    .lang-pill {
+      display: inline-flex;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .lang-pill a {
+      padding: 6px 14px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--fog);
+      transition: all 0.15s;
+    }
+
+    .lang-pill a.active, .lang-pill a:hover {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { gap: 20px; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 100px 24px 60px;
+        min-height: auto;
+      }
+
+      .hero-right {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .section { padding: 64px 24px; }
+
+      .timeline::before { left: 0; }
+      .timeline-item { grid-template-columns: 1fr; gap: 4px 0; padding-left: 24px; }
+      .timeline-date { text-align: left; }
+      .timeline-dot { left: -5px; }
+
+      footer { flex-direction: column; gap: 10px; text-align: center; padding: 28px 24px; }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero-right { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .kpi-value { font-size: 2rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-left, .hero-right { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-brand">Benjamin <span>M.</span> Leonardi</div>
+    <ul class="nav-links">
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="lang-pill">
+      <a href="portfolio-en.html" class="active">EN</a>
+      <a href="portfolio-es.html">ES</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Project Manager &amp; Technical Lead</p>
+      <h1>Benjamin M.<br>Leonardi</h1>
+      <p class="hero-title">Bridging technical execution and strategic delivery</p>
+      <p class="hero-bio">
+        Project manager and technical lead with 3+ years of experience coordinating cross-functional teams, managing stakeholder communication, and delivering software projects on time — from government platforms to international AAA titles.
+      </p>
+      <div class="hero-cta">
+        <a href="https://benjaleonardi.github.io/assets/Leonardi_Benjamin_CV_2026_English_PDF.pdf" target="_blank" class="btn btn-primary">Download CV</a>
+        <a href="https://www.linkedin.com/in/benjamin-maximiliano-leonardi-b9779310a/" target="_blank" class="btn btn-secondary">LinkedIn</a>
+        <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="kpi-card">
+        <div class="kpi-value">5<span>+</span></div>
+        <div class="kpi-label">Shipped Projects</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value">3<span>+</span></div>
+        <div class="kpi-label">Years Experience</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value">40<span>%</span></div>
+        <div class="kpi-label">Avg. Performance Gain</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value">AAA</div>
+        <div class="kpi-label">Client Portfolio</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section section-alt" id="experience">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-eyebrow">Professional History</p>
+        <h2>Work Experience</h2>
+        <p class="section-sub">A track record of leading teams, managing clients, and delivering complex software projects across sectors.</p>
+      </div>
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-date">
+            <div class="timeline-year">2023 – Present</div>
+            <div class="timeline-org">The OGS</div>
+          </div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-body">
+            <div class="timeline-role">Technical Lead &amp; Project Manager</div>
+            <div class="timeline-tags">
+              <span class="tag">Technical PM</span>
+              <span class="tag">Client Management</span>
+              <span class="tag">Team Lead</span>
+            </div>
+            <p class="timeline-desc">
+              Led cross-platform delivery of 5+ software titles in collaboration with international publishers including EA, Annapurna Interactive, Team17, and Graffiti Games.
+            </p>
+            <ul class="timeline-highlights">
+              <li>Managed requirements gathering and client communication directly with AAA stakeholders, ensuring alignment between expectations and delivered solutions.</li>
+              <li>Coordinated technical teams across full delivery cycles — from scoping and planning through QA, certification, and release.</li>
+              <li>Achieved average performance improvements of 40% on Nintendo Switch and 20–25% on current-gen platforms, with specific optimizations exceeding 100% gains.</li>
+              <li>Earned platform certifications from Sony, Microsoft, and Nintendo across all shipped titles.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">
+            <div class="timeline-year">2022 – 2023</div>
+            <div class="timeline-org">EANA</div>
+          </div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-body">
+            <div class="timeline-role">Lead Developer &amp; Project Manager</div>
+            <div class="timeline-tags">
+              <span class="tag">Project Management</span>
+              <span class="tag">Stakeholder Alignment</span>
+              <span class="tag">Government Tech</span>
+            </div>
+            <p class="timeline-desc">
+              Led development of a national airspace request tracking and analysis platform for Empresa Argentina de Navegación Aérea, serving as both technical lead and project manager.
+            </p>
+            <ul class="timeline-highlights">
+              <li>Coordinated a cross-functional team across design, development, and testing phases.</li>
+              <li>Managed ongoing stakeholder communication with government clients, translating business requirements into measurable technical deliverables.</li>
+              <li>Delivered the platform end-to-end within the defined scope and timeline.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">
+            <div class="timeline-year">2020 – 2023</div>
+            <div class="timeline-org">Pensions &amp; Retirements CBA</div>
+          </div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-body">
+            <div class="timeline-role">IT Technician &amp; Software Developer</div>
+            <div class="timeline-tags">
+              <span class="tag">Internal Tools</span>
+              <span class="tag">Process Automation</span>
+              <span class="tag">Infrastructure</span>
+            </div>
+            <p class="timeline-desc">
+              Built and maintained internal software tools to optimize operational efficiency within a public-sector organization.
+            </p>
+            <ul class="timeline-highlights">
+              <li>Designed and deployed a WhatsApp-based chatbot for internal use, reducing manual inquiry handling.</li>
+              <li>Developed infrastructure management systems including warehouse software and IT asset tracking.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section" id="projects">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-eyebrow">Selected Work</p>
+        <h2>Key Projects</h2>
+        <p class="section-sub">A selection of software delivery projects managed and contributed to across platforms and clients.</p>
+      </div>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="project-type">Technical PM · 2026</div>
+          <div class="project-name">Skinwalker: First Blood</div>
+          <div class="project-meta">Developer: Sismo Games &nbsp;|&nbsp; Publisher: Team17</div>
+          <p class="project-desc">Led porting team delivery across last and current-gen consoles and the Microsoft Store. Most technically demanding project to date, requiring close coordination with Team17's certification and QA pipeline.</p>
+        </div>
+
+        <div class="project-card">
+          <div class="project-type">Technical PM · Release 2021</div>
+          <div class="project-name">My Little Universe</div>
+          <div class="project-meta">Developer: Estoty &nbsp;|&nbsp; Publisher: SayGames</div>
+          <p class="project-desc">Led the porting team through full multi-platform delivery. The most demanding project in terms of client communication, requirements management, and stakeholder alignment across multiple international parties.</p>
+        </div>
+
+        <div class="project-card">
+          <div class="project-type">PM · Platform Delivery</div>
+          <div class="project-name">Storyteller</div>
+          <div class="project-meta">Designer: Daniel Benmergui &nbsp;|&nbsp; Publisher: Annapurna Interactive</div>
+          <p class="project-desc">Contributed to multiple platform ports including the Netflix port, the most downloaded Netflix game of 2023. Coordinated delivery across diverse platform requirements and publisher expectations.</p>
+        </div>
+
+        <div class="project-card">
+          <div class="project-type">PM · Platform Delivery</div>
+          <div class="project-name">Elderand</div>
+          <div class="project-meta">Developer: Sinergia / Mantra &nbsp;|&nbsp; Publisher: Graffiti Games</div>
+          <p class="project-desc">Managed the Xbox port delivery, overseeing QA coordination, performance optimization tracking, and certification milestone planning.</p>
+        </div>
+
+        <div class="project-card">
+          <div class="project-type">PM · Platform Delivery</div>
+          <div class="project-name">We Need to Go Deeper</div>
+          <div class="project-meta">Developer &amp; Publisher: Deli Interactive / Graffiti Games</div>
+          <p class="project-desc">Managed the Nintendo Switch port, coordinating optimization work and networking bug resolution while tracking progress against certification requirements.</p>
+        </div>
+
+        <div class="project-card">
+          <div class="project-type">Lead PM · National Platform · 2022–2023</div>
+          <div class="project-name">EANA Airspace Tracker</div>
+          <div class="project-meta">Client: Empresa Argentina de Navegación Aérea</div>
+          <p class="project-desc">End-to-end project management of a government airspace request tracking and analysis platform. Led cross-functional team coordination, requirements definition, and stakeholder reporting for a national-scale system.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section section-dark" id="skills">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-eyebrow">Competencies</p>
+        <h2>Skills &amp; Expertise</h2>
+        <p class="section-sub">Core capabilities built across project delivery, technical leadership, and client-facing roles.</p>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <div class="skill-group-label">Project Management</div>
+          <ul class="skill-list">
+            <li>Project planning &amp; scoping</li>
+            <li>Agile / iterative delivery</li>
+            <li>Risk &amp; dependency tracking</li>
+            <li>Timeline &amp; milestone management</li>
+            <li>Cross-functional team coordination</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Stakeholder &amp; Client</div>
+          <ul class="skill-list">
+            <li>Requirements gathering</li>
+            <li>Executive communication</li>
+            <li>Client relationship management</li>
+            <li>Contract &amp; deliverable alignment</li>
+            <li>Expectation management</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Technical Leadership</div>
+          <ul class="skill-list">
+            <li>Software delivery lifecycle</li>
+            <li>QA &amp; certification management</li>
+            <li>Performance benchmarking</li>
+            <li>Platform compliance (Sony / MS / Nintendo)</li>
+            <li>Technical documentation</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Tools &amp; Stack</div>
+          <ul class="skill-list">
+            <li>Unity Engine</li>
+            <li>Godot 4</li>
+            <li>Node.js / Python</li>
+            <li>Git &amp; version control</li>
+            <li>Jira / project tracking tools</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Languages</div>
+          <ul class="skill-list">
+            <li>Spanish — Native</li>
+            <li>English — Professional proficiency</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-eyebrow">Get in Touch</p>
+        <h2>Let's Work Together</h2>
+        <p class="section-sub">Open to project management roles, technical lead engagements, and consulting opportunities.</p>
+      </div>
+      <div class="contact-row">
+        <a href="https://benjaleonardi.github.io/assets/Leonardi_Benjamin_CV_2026_English_PDF.pdf" target="_blank" class="btn btn-primary">Resume (EN)</a>
+        <a href="https://benjaleonardi.github.io/assets/Leonardi_Benjamin_CV_2026_Spanish_PDF.pdf" target="_blank" class="btn btn-secondary">CV (ES)</a>
+        <a href="https://www.linkedin.com/in/benjamin-maximiliano-leonardi-b9779310a/" target="_blank" class="btn btn-secondary">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-name">Benjamin M. Leonardi</div>
+    <div class="footer-note">Project Manager &amp; Technical Lead · Córdoba, Argentina · 2026</div>
+  </footer>
+
+</body>
+</html>
