@@ -1,756 +1,833 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Benjamin Leonardi - Portfolio</title>
-    <link rel="shortcut icon" href="Aperture_Science.ico" type="image/x-icon">
-    <link rel="icon" href="Aperture_Science.ico" type="image/x-icon">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Share+Tech+Mono&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Roboto Mono', monospace;
-            background: #1a1a1a;
-            color: #fff;
-            overflow-x: hidden;
-        }
-        
-        /* Animated Grid Background */
-        .grid-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent),
-                linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent);
-            background-size: 50px 50px;
-            z-index: 0;
-            animation: gridMove 20s linear infinite;
-        }
-        
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-        
-        /* Portal Effects */
-        .portal {
-            position: fixed;
-            width: 200px;
-            height: 300px;
-            border-radius: 50%;
-            filter: blur(2px);
-            opacity: 0.3;
-            animation: portalPulse 3s ease-in-out infinite;
-            z-index: 1;
-        }
-        
-        .portal-orange {
-            top: 10%;
-            right: 5%;
-            background: radial-gradient(ellipse, rgba(255, 140, 0, 0.6) 0%, rgba(255, 140, 0, 0.2) 40%, transparent 70%);
-            box-shadow: 0 0 60px rgba(255, 140, 0, 0.8);
-        }
-        
-        .portal-blue {
-            bottom: 10%;
-            left: 5%;
-            background: radial-gradient(ellipse, rgba(0, 150, 255, 0.6) 0%, rgba(0, 150, 255, 0.2) 40%, transparent 70%);
-            box-shadow: 0 0 60px rgba(0, 150, 255, 0.8);
-        }
-        
-        @keyframes portalPulse {
-            0%, 100% { transform: scale(1); opacity: 0.3; }
-            50% { transform: scale(1.1); opacity: 0.5; }
-        }
-        
-        /* Container */
-        .container {
-            position: relative;
-            z-index: 2;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        /* Header - Aperture Style */
-        .header {
-            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
-            color: #000;
-            padding: 40px;
-            margin: 20px 0;
-            border-left: 8px solid #ff8c00;
-            border-right: 8px solid #0096ff;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
-            animation: slideInFromTop 1s ease-out;
-        }
-        
-        @keyframes slideInFromTop {
-            0% { transform: translateY(-100%); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                repeating-linear-gradient(
-                    0deg,
-                    transparent,
-                    transparent 2px,
-                    rgba(0, 0, 0, 0.03) 2px,
-                    rgba(0, 0, 0, 0.03) 4px
-                );
-            pointer-events: none;
-        }
-        
-        .aperture-logo {
-            font-size: 2.5em;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        
-        .header h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #ff8c00, #0096ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .header .subtitle {
-            font-size: 1.5em;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        
-        .glados-quote {
-            font-style: italic;
-            color: #666;
-            margin-top: 20px;
-            padding: 15px;
-            border-left: 3px solid #ff8c00;
-            background: rgba(0, 0, 0, 0.05);
-        }
-        
-        /* Panel Sections */
-        .panel {
-            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
-            color: #000;
-            padding: 30px;
-            margin: 30px 0;
-            border: 3px solid #ddd;
-            box-shadow: 
-                0 5px 15px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8);
-            position: relative;
-            overflow: hidden;
-            animation: panelSlideIn 0.8s ease-out;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .panel:hover {
-            transform: translateY(-5px);
-            box-shadow: 
-                0 15px 30px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8);
-        }
-        
-        @keyframes panelSlideIn {
-            0% { transform: translateX(-100%); opacity: 0; }
-            100% { transform: translateX(0); opacity: 1; }
-        }
-        
-        .panel::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                repeating-linear-gradient(
-                    90deg,
-                    transparent,
-                    transparent 48px,
-                    rgba(0, 0, 0, 0.02) 48px,
-                    rgba(0, 0, 0, 0.02) 50px
-                ),
-                repeating-linear-gradient(
-                    0deg,
-                    transparent,
-                    transparent 48px,
-                    rgba(0, 0, 0, 0.02) 48px,
-                    rgba(0, 0, 0, 0.02) 50px
-                );
-            pointer-events: none;
-        }
-        
-        .panel h2 {
-            font-size: 2em;
-            margin-bottom: 20px;
-            color: #000;
-            border-bottom: 3px solid #ff8c00;
-            padding-bottom: 10px;
-            display: inline-block;
-        }
-        
-        .panel.blue-accent h2 {
-            border-bottom: 3px solid #0096ff;
-        }
-        
-        /* Bio Section */
-        .bio {
-            font-size: 1.1em;
-            line-height: 1.8;
-            color: #333;
-        }
-        
-        /* Current Job */
-        .job-card {
-            background: rgba(255, 140, 0, 0.1);
-            padding: 20px;
-            border-left: 5px solid #ff8c00;
-            margin: 20px 0;
-            transition: all 0.3s ease;
-        }
-        
-        .job-card:hover {
-            background: rgba(255, 140, 0, 0.2);
-            transform: translateX(10px);
-        }
-        
-        .job-card h3 {
-            font-size: 1.8em;
-            color: #ff8c00;
-            margin-bottom: 10px;
-        }
-        
-        .job-card .company {
-            font-size: 1.3em;
-            color: #333;
-            font-weight: bold;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Benjamin M. Leonardi — Project Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* Previous Job */
-        .job-card-alt {
-            background: rgba(0, 150, 255, 0.05);
-            padding: 20px;
-            border-left: 5px solid #0096ff;
-            margin: 20px 0;
-            transition: all 0.3s ease;
-        }
-        
-        .job-card-alt:hover {
-            background: rgba(0, 150, 255, 0.05);
-            transform: translateX(10px);
-        }
-        
-        .job-card-alt h3 {
-            font-size: 1.8em;
-            color: #0096ff;
-            margin-bottom: 10px;
-        }
-        
-        .job-card-alt .company {
-            font-size: 1.3em;
-            color: #333;
-            font-weight: bold;
-        }
-        
-        /* Projects */
-        .project-card {
-            background: rgba(0, 150, 255, 0.05);
-            padding: 25px;
-            margin: 20px 0;
-            border: 2px solid #0096ff;
-            border-radius: 5px;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        
-        .project-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 150, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-        
-        .project-card:hover::after {
-            left: 100%;
-        }
-        
-        .project-card:hover {
-            background: rgba(0, 150, 255, 0.15);
-            transform: scale(1.02);
-            box-shadow: 0 10px 30px rgba(0, 150, 255, 0.3);
-        }
-        
-        .project-card h3 {
-            font-size: 1.6em;
-            color: #0096ff;
-            margin-bottom: 15px;
-        }
+    :root {
+      --navy:    #0F1923;
+      --slate:   #1A2A3A;
+      --steel:   #2A6496;
+      --fog:     #8A9BB0;
+      --cream:   #F0EDE6;
+      --white:   #FAFAF8;
+      --gold:    #C9A84C;
+      --divider: #2C3E50;
+      --text:    #1A2430;
+    }
 
-        .project-card:focus {
-            outline: 3px solid rgba(0, 150, 255, 0.35);
-            outline-offset: 2px;
-        }
-        
-        .project-card p {
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        /* Contact Links */
-        .contact-links {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-        
-        .contact-btn {
-            display: inline-block;
-            padding: 15px 30px;
-            background: linear-gradient(135deg, #ff8c00, #ff6600);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .contact-btn.blue {
-            background: linear-gradient(135deg, #0096ff, #0066cc);
-            box-shadow: 0 5px 15px rgba(0, 150, 255, 0.4);
-        }
-        
-        .contact-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-        }
-        
-        .contact-btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-        
-        .contact-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 140, 0, 0.6);
-        }
-        
-        .contact-btn.blue:hover {
-            box-shadow: 0 10px 25px rgba(0, 150, 255, 0.6);
-        }
-        
-        .contact-btn span {
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 40px;
-            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
-            margin-top: 50px;
-            border-top: 3px solid #ff8c00;
-            border-bottom: 3px solid #0096ff;
-        }
-        
-        .footer-quote {
-            font-style: italic;
-            color: #999;
-            margin-top: 20px;
-            font-size: 0.9em;
-        }
-        
-        /* Portal Dividers */
-        .portal-divider {
-            position: relative;
-            height: 4px;
-            margin: 30px 0;
-            background: linear-gradient(to right, #ff8c00 0%, #0096ff 100%);
-            box-shadow: 
-                0 0 10px rgba(255, 140, 0, 0.6),
-                0 0 20px rgba(255, 140, 0, 0.4),
-                0 0 30px rgba(0, 150, 255, 0.4),
-                0 0 40px rgba(0, 150, 255, 0.2);
-            animation: portalGlow 2s ease-in-out infinite;
-        }
-        
-        .portal-divider::before,
-        .portal-divider::after {
-            content: '';
-            position: absolute;
-            width: 50%;
-            height: 100%;
-            top: 0;
-        }
-        
-        .portal-divider::before {
-            left: 0;
-            background: linear-gradient(to right, #ff8c00, rgba(255, 140, 0, 0.5));
-            box-shadow: 0 0 15px rgba(255, 140, 0, 0.8);
-            animation: pulseOrange 2s ease-in-out infinite;
-        }
-        
-        .portal-divider::after {
-            right: 0;
-            background: linear-gradient(to left, #0096ff, rgba(0, 150, 255, 0.5));
-            box-shadow: 0 0 15px rgba(0, 150, 255, 0.8);
-            animation: pulseBlue 2s ease-in-out infinite;
-        }
-        
-        @keyframes portalGlow {
-            0%, 100% { 
-                box-shadow: 
-                    0 0 10px rgba(255, 140, 0, 0.6),
-                    0 0 20px rgba(255, 140, 0, 0.4),
-                    0 0 30px rgba(0, 150, 255, 0.4),
-                    0 0 40px rgba(0, 150, 255, 0.2);
-            }
-            50% { 
-                box-shadow: 
-                    0 0 20px rgba(255, 140, 0, 0.8),
-                    0 0 30px rgba(255, 140, 0, 0.6),
-                    0 0 40px rgba(0, 150, 255, 0.6),
-                    0 0 50px rgba(0, 150, 255, 0.4);
-            }
-        }
-        
-        @keyframes pulseOrange {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
-        }
-        
-        @keyframes pulseBlue {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
-        }
-        
-        /* Test Subject Badge */
-        .test-subject-badge {
-            display: inline-block;
-            background: #000;
-            color: #ff8c00;
-            padding: 10px 20px;
-            border: 2px solid #ff8c00;
-            font-family: 'Share Tech Mono', monospace;
-            margin: 10px 0;
-            animation: badgeGlow 2s ease-in-out infinite;
-        }
-        
-        @keyframes badgeGlow {
-            0%, 100% { box-shadow: 0 0 5px #ff8c00; }
-            50% { box-shadow: 0 0 20px #ff8c00, 0 0 30px #ff8c00; }
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2em;
-            }
-            
-            .panel {
-                padding: 20px;
-            }
-            
-            .contact-links {
-                flex-direction: column;
-            }
-            
-            .portal {
-                width: 150px;
-                height: 200px;
-            }
-        }
-        
-        /* Loading Animation */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            animation: fadeOut 2s ease-in-out 1s forwards;
-        }
-        
-        @keyframes fadeOut {
-            to { opacity: 0; visibility: hidden; }
-        }
-        
-        .loading-text {
-            color: #ff8c00;
-            font-size: 2em;
-            font-family: 'Share Tech Mono', monospace;
-            animation: blink 1s ease-in-out infinite;
-        }
-        
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-    </style>
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(15, 25, 35, 0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.18);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 60px;
+      height: 64px;
+    }
+
+    .nav-brand {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--cream);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-brand span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--fog);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 100px 60px 80px;
+      gap: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(135deg, transparent 0%, rgba(42, 100, 150, 0.08) 100%);
+      pointer-events: none;
+    }
+
+    .hero-left {
+      animation: fadeUp 0.9s ease both;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4rem);
+      line-height: 1.1;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--fog);
+      letter-spacing: 0.04em;
+      margin-bottom: 28px;
+    }
+
+    .hero-bio {
+      font-size: 1rem;
+      color: rgba(240, 237, 230, 0.72);
+      max-width: 480px;
+      line-height: 1.75;
+      margin-bottom: 40px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 26px;
+      border-radius: 2px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    .btn-primary:hover {
+      background: #dbb95a;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--cream);
+      border: 1px solid rgba(240, 237, 230, 0.25);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .hero-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      animation: fadeUp 0.9s 0.2s ease both;
+    }
+
+    .kpi-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px;
+      padding: 28px 24px;
+      transition: border-color 0.2s;
+    }
+
+    .kpi-card:hover { border-color: rgba(201, 168, 76, 0.35); }
+
+    .kpi-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.6rem;
+      color: var(--cream);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .kpi-value span { color: var(--gold); font-size: 1.6rem; }
+
+    .kpi-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fog);
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      padding: 96px 60px;
+    }
+
+    .section-alt { background: var(--cream); }
+
+    .section-dark {
+      background: var(--slate);
+      color: var(--cream);
+    }
+
+    .section-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      margin-bottom: 56px;
+    }
+
+    .section-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.9rem, 3vw, 2.6rem);
+      line-height: 1.15;
+      color: var(--navy);
+    }
+
+    .section-dark h2 { color: var(--cream); }
+    .section-alt h2 { color: var(--navy); }
+
+    .section-sub {
+      font-size: 0.95rem;
+      color: var(--fog);
+      margin-top: 10px;
+      max-width: 560px;
+    }
+
+    .section-dark .section-sub { color: rgba(138, 155, 176, 0.85); }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 148px;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold), rgba(201,168,76,0.15));
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 148px 1fr;
+      gap: 0 40px;
+      margin-bottom: 52px;
+      position: relative;
+    }
+
+    .timeline-item:last-child { margin-bottom: 0; }
+
+    .timeline-date {
+      text-align: right;
+      padding-top: 4px;
+    }
+
+    .timeline-year {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+    }
+
+    .timeline-org {
+      font-size: 0.72rem;
+      color: var(--fog);
+      margin-top: 2px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 143px;
+      top: 8px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--white);
+      z-index: 1;
+    }
+
+    .section-alt .timeline-dot { border-color: var(--cream); }
+
+    .timeline-body { padding-left: 0; }
+
+    .timeline-role {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .timeline-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 2px;
+      background: rgba(42, 100, 150, 0.1);
+      color: var(--steel);
+      border: 1px solid rgba(42, 100, 150, 0.2);
+    }
+
+    .timeline-desc {
+      font-size: 0.92rem;
+      color: #3A4A5A;
+      line-height: 1.75;
+    }
+
+    .timeline-highlights {
+      margin-top: 12px;
+      padding-left: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .timeline-highlights li {
+      font-size: 0.87rem;
+      color: #4A5A6A;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .timeline-highlights li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--white);
+      border: 1px solid rgba(26, 36, 48, 0.1);
+      border-radius: 4px;
+      padding: 32px 28px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .project-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+
+    .project-type {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--steel);
+      margin-bottom: 10px;
+    }
+
+    .project-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .project-meta {
+      font-size: 0.78rem;
+      color: var(--fog);
+      margin-bottom: 14px;
+    }
+
+    .project-desc {
+      font-size: 0.88rem;
+      color: #4A5A6A;
+      line-height: 1.7;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .skill-group {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 4px;
+      padding: 24px 20px;
+    }
+
+    .skill-group-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    .skill-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .skill-list li {
+      font-size: 0.88rem;
+      color: rgba(240, 237, 230, 0.78);
+    }
+
+    /* ── CONTACT ── */
+    .contact-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      padding: 36px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(201, 168, 76, 0.18);
+    }
+
+    .footer-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1rem;
+      color: var(--cream);
+    }
+
+    .footer-note {
+      font-size: 0.75rem;
+      color: var(--fog);
+    }
+
+    /* ── LANG TOGGLE ── */
+    .lang-pill {
+      display: inline-flex;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .lang-pill a {
+      padding: 6px 14px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--fog);
+      transition: all 0.15s;
+    }
+
+    .lang-pill a.active, .lang-pill a:hover {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { gap: 20px; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 100px 24px 60px;
+        min-height: auto;
+      }
+
+      .hero-right {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .section { padding: 64px 24px; }
+
+      .timeline::before { left: 0; }
+      .timeline-item { grid-template-columns: 1fr; gap: 4px 0; padding-left: 24px; }
+      .timeline-date { text-align: left; }
+      .timeline-dot { left: -5px; }
+
+      footer { flex-direction: column; gap: 10px; text-align: center; padding: 28px 24px; }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero-right { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .kpi-value { font-size: 2rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-left, .hero-right { animation: none; }
+    }
+  </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading-screen">
-        <div class="loading-text">INITIALIZING APERTURE SCIENCE PERSONNEL FILE...</div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-brand">Benjamin M. Leonardi</div>
+    <ul class="nav-links">
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="lang-pill">
+      <a href="portfolio-en.html" class="active">EN</a>
+      <a href="portfolio-es.html">ES</a>
     </div>
-    
-    <!-- Portal Effects -->
-    <div class="portal portal-orange"></div>
-    <div class="portal portal-blue"></div>
-    
-    <!-- Grid Background -->
-    <div class="grid-background"></div>
-    
-    <!-- Main Container -->
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="test-subject-badge">TEST SUBJECT PORTFOLIO: GAME_DEV_001</div>
-            <h1>BENJAMIN M. LEONARDI</h1>
-            <div class="subtitle">GAME DEVELOPER</div>
-        </header>
-        
-        <div class="portal-divider"></div>
-        
-        <!-- Bio Section -->
-        <section class="panel">
-            <h2>PERSONNEL FILE: BIOGRAPHICAL DATA</h2>
-            <div class="bio">
-                <p>Game developer and technical lead with 3+ years of professional experience including console porting across 
-                    PS4, PS5, Xbox One, Xbox Series X/S and Nintendo Switch.</p>
-                <br>
-                <p>Helped ship 5+ titles from indie to AAA (including a title for EA) delivering consistent performance improvements of 20-45% on average, achieving 
-                    performance scores approved by Sony, Microsoft and Nintendo.</p>
-                <br>
-                <p>Deep technical expertise on the Unity Engine, project management and direct client communication.</p>
-            </div>
-        </section>
-        
-        <!-- Current Job -->
-        <section class="panel">
-            <h2>LATEST ASSIGNMENT</h2>
-            <div class="job-card">
-                <h3>TECHNICAL LEAD DEVELOPER</h3>
-                <div class="company">The OGS (The Original Gangsters)</div>
-                <p style="margin-top: 15px; color: #555;">Ported 5+ titles to PS4, PS5, Xbox One, Xbox Series X/S and Nintendo Switch, including Storyteller, an Annapurna game, 
-                    We Need to Go Deeper, Elderand, Skinwalker, My Little Universe and a working title for EA.</p>
-                <p style="margin-top: 15px; color: #555;">Implemented and optimized state machines, reactive AI systems and improved gameplay stability reducing runtime 
-                    resource overhead.</p>
-                <p style="margin-top: 15px; color: #555;">Achieved average performance gains of 40% on Nintendo Switch and 20-25% on current gen consoles, 
-                    with targeted optimization exceeding 100% improvement in specific bottlenecks and projects.</p>
-                <p style="margin-top: 15px; color: #555;">Managed requirements gathering and technical communication directly with AAA clients including EA, 
-                    Team17 and more, ensuring alignment between expectations and delivered solutions.</p>
-            </div>
-        </section>
-        
-        <div class="portal-divider"></div>
+  </nav>
 
-        <!-- Previous Jobs -->
-        <section class="panel blue-accent">
-            <h2>PREVIOUS ASSIGNMENTS</h2>
-            <div class="job-card-alt">
-                <h3>Lead Developer & Project Manager</h3>
-                <div class="company">EANA (Empresa Argentina de Navegación Aérea) - 2022/2023</div>
-                <p style="margin-top: 15px; color: #555;">Led development of a national airspace request tracking and analysis platform, serving as both technical 
-                    lead and project manager.</p>
-                <p style="margin-top: 15px; color: #555;">Coordinated a cross-functional team, managed stakeholder communication, and translated business requirements
-                     into measurable technical deliverables.</p>
-            </div>
-
-            <div class="job-card-alt">
-                <h3>IT Technician & Software Developer</h3>
-                <div class="company">Pensions and Retirements CBA - 2020/2023</div>
-                <p style="margin-top: 15px; color: #555;">Built internal tools including a WhatsApp chatbot and infrastructure management systems to optimize operational
-                     efficiency, such as a warehouse software.</p>
-            </div>
-        </section>
-
-        <div class="portal-divider"></div>
-        
-        <!-- Projects -->
-        <section class="panel blue-accent">
-            <h2>COMPLETED TEST CHAMBERS (PROJECTS)</h2>
-            
-            <div class="project-card" data-url="https://www.xbox.com/es-AR/games/store/elderand/9PMKJDSDK77C">
-                <h3>ELDERAND</h3>
-                <p><strong>Type:</strong> Metroidvania RPG | <strong>Developer:</strong> Sinergia Games & Mantra | <strong>Publisher:</strong> Graffiti Games</p>
-                <p style="margin-top: 10px;">Helped develop the Elderand XBOX port, fixing bugs, doing QA and optimizing performance.</p>
-            </div>
-            
-            <div class="project-card" data-url="https://www.netflix.com/ar/games/81569948">
-                <h3>STORYTELLER</h3>
-                <p><strong>Type:</strong> Puzzle Game | <strong>Designer:</strong> Daniel Benmergui | <strong>Publisher:</strong> Annapurna Interactive</p>
-                <p style="margin-top: 10px;">Helped develop the various platform ports including the famous and 2023's most downloaded Netflix port.</p>
-            </div>
-            
-            <div class="project-card" data-url="https://www.nintendo.com/es-ar/store/products/we-need-to-go-deeper-switch/?srsltid=AfmBOoqProORjigVsw_KP118cKKiXIUMjIuSTMH7TIF2r6k4QlKBpMaj">
-                <h3>WE NEED TO GO DEEPER</h3>
-                <p><strong>Type:</strong> 2-4 Player Cooperative Submarine Roguelike | <strong>Developer:</strong> Deli Interactive LLC | <strong>Publisher:</strong> Deli & Graffiti Games</p>
-                <p style="margin-top: 10px;">Helped develop the Nintendo Switch port, worked on optimization for the platform and fixed various networking and game breaking bugs.</p>
-            </div>
-            
-            <div class="project-card">
-                <h3>ECHOES OF THE VOID</h3>
-                <p><strong>Type:</strong> 1v1 Horror Game (Game Jam) | <strong>Platforms:</strong> PC, PS4/PS5, Nintendo Switch</p>
-                <p style="margin-top: 10px;">Echoes of the Void is a game-jam 1v1 horror game in which you send "Daredevil-esque" echolocation pulses to "sense" the world around you, avoiding monsters that only move when you can see them and finishing the objective before the other player does it first.</p>
-            </div>
-            
-            <div class="project-card" data-url="https://www.xbox.com/es-es/games/store/SKINWALKER/9N6L0706DFHG">
-                <h3>SKINWALKER: FIRST BLOOD</h3>
-                <p><strong>Type:</strong> Action Slasher Game | <strong>Developer:</strong> Sismo Games | <strong>Publisher:</strong> Team17 | <strong>Release:</strong> 2026</p>
-                <p style="margin-top: 10px;">Led the porting team and helped develop the game, bringing this game to the last and current-gen consoles as well as the Microsoft Store. Greatly improved performance and user experience and worked on AI and behaviors of NPCs in the game. The most technically demanding project to date.</p>
-            </div>
-            
-            <div class="project-card" data-url="https://www.xbox.com/es-AR/games/store/my-little-universe/9MT5C35CCP0Q/0010">
-                <h3>MY LITTLE UNIVERSE</h3>
-                <p><strong>Type:</strong> Mobile Game | <strong>Developer:</strong> Estoty | <strong>Publisher:</strong> SayGames | <strong>Release:</strong> September 2021</p>
-                <p style="margin-top: 10px;">Led the porting team in bringing this game to the last and current-gen consoles as well as the Microsoft Store. The most demanding project in terms of client communication, requirements and team management.</p>
-            </div>
-        </section>
-        
-        <div class="portal-divider"></div>
-        
-        <!-- Contact -->
-        <section class="panel">
-            <h2>COMMUNICATION LINK</h2>
-            <p style="color: #333; margin-bottom: 20px;">Take a look at my full resume and socials!</p>
-            <div class="contact-links">
-                <a href="./assets/Leonardi_Benjamin_CV_2026_English_PDF.pdf" target="_blank" class="contact-btn">
-                    <span>💼 RESUME - ENGLISH</span>
-                </a>
-		<a href="./assets/Leonardi_Benjamin_CV_2026_Spanish_PDF.pdf" target="_blank" class="contact-btn">
-                    <span>💼 CV - ESPAÑOL</span>
-                </a>
-                <a href="https://www.linkedin.com/in/benjamin-maximiliano-leonardi-b9779310a/" target="_blank" class="contact-btn blue">
-                    <span>🌐 LINKEDIN</span>
-                </a>
-            </div>
-        </section>
-        
-        <!-- Footer -->
-        <footer class="footer">
-            <p style="font-size: 1.2em; margin-bottom: 10px;">BENJAMIN M. LEONARDI - GAME DEVELOPER</p>
-            <p>PORTFOLIO - 2026</p>
-            <div class="footer-quote">
-                "The test is now over. All Aperture technologies remain safely operational up to 4000 degrees Kelvin. Rest assured that there is absolutely no chance of a dangerous equipment malfunction prior to your victory candescence."
-                <br>- GLaDOS
-            </div>
-        </footer>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Software Developer &amp; Project Manager</p>
+      <h1>Benjamin M.<br>Leonardi</h1>
+      <p class="hero-title">Bridging technical execution and strategic delivery</p>
+      <p class="hero-bio">
+        Software Developer and technical lead with 3+ years of experience coordinating cross-functional teams, managing stakeholder communication, and delivering software projects on time — from government platforms to international AAA titles.
+      </p>
+      <div class="hero-cta">
+        <a href="https://benjaleonardi.github.io/assets/Leonardi_Benjamin_CV_2026_English_PDF.pdf" target="_blank" class="btn btn-primary">Download CV</a>
+        <a href="https://www.linkedin.com/in/benjamin-maximiliano-leonardi-b9779310a/" target="_blank" class="btn btn-secondary">LinkedIn</a>
+        <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+      </div>
     </div>
-    
-    <script>
-        // Portal following cursor effect
-        document.addEventListener('mousemove', (e) => {
-            const portalOrange = document.querySelector('.portal-orange');
-            const portalBlue = document.querySelector('.portal-blue');
-            
-            const moveX = (e.clientX / window.innerWidth - 0.5) * 50;
-            const moveY = (e.clientY / window.innerHeight - 0.5) * 50;
-            
-            portalOrange.style.transform = `translate(${moveX}px, ${moveY}px)`;
-            portalBlue.style.transform = `translate(${-moveX}px, ${-moveY}px)`;
-        });
-        
-        // Smooth scroll animation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-        
-        // Panel animation on scroll
-        /*const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateX(0)';
-                }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('.panel').forEach(panel => {
-            panel.style.opacity = '0';
-            observer.observe(panel);
-        });*/
+    <div class="hero-right">
+      <div class="kpi-card">
+        <div class="kpi-value">5<span>+</span></div>
+        <div class="kpi-label">Shipped Projects</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value">3<span>+</span></div>
+        <div class="kpi-label">Years Experience</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value">Certified</div>
+        <div class="kpi-label">Product Owner, Project Manager</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value">Indie / AAA</div>
+        <div class="kpi-label">Client Portfolio</div>
+      </div>
+    </div>
+  </section>
 
-        // Make project cards clickable when they have a `data-url` attribute.
-        document.querySelectorAll('.project-card').forEach(card => {
-            const url = card.getAttribute('data-url');
-            if (!url) return;
-            // Ensure keyboard and accessibility
-            card.setAttribute('role', 'link');
-            if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
+  <!-- EXPERIENCE -->
+  <section class="section section-alt" id="experience">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-eyebrow">Professional History</p>
+        <h2>Work Experience</h2>
+        <p class="section-sub">A track record of leading teams, managing clients, and delivering complex software projects across sectors.</p>
+      </div>
+      <div class="timeline">
 
-            // Click handler (ignore clicks on real anchors inside)
-            card.addEventListener('click', (e) => {
-                if (e.target.closest('a')) return;
-                window.open(url, '_blank');
-            });
+        <div class="timeline-item">
+          <div class="timeline-date">
+            <div class="timeline-year">2023 – 2026</div>
+            <div class="timeline-org">TheOGS</div>
+          </div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-body">
+            <div class="timeline-role">Game Developer &amp; Project Manager</div>
+            <div class="timeline-tags">
+              <span class="tag">Technical PM</span>
+              <span class="tag">Client Management</span>
+              <span class="tag">Game Developing and Porting</span>
+            </div>
+            <p class="timeline-desc">
+              Led cross-platform delivery of 5+ software titles in collaboration with international publishers including EA, Annapurna Interactive, Team17, and Graffiti Games.
+            </p>
+            <ul class="timeline-highlights">
+              <li>Managed requirements gathering and client communication directly with AAA stakeholders, ensuring alignment between expectations and delivered solutions.</li>
+              <li>Coordinated technical teams across full delivery cycles — from scoping and planning through QA, certification, and release.</li>
+              <li>Achieved average performance improvements of 40% on Nintendo Switch and 20–25% on current-gen platforms, with specific optimizations exceeding 100% gains.</li>
+              <li>Earned platform certifications from Sony, Microsoft, and Nintendo across all shipped titles.</li>
+            </ul>
+          </div>
+        </div>
 
-            // Keyboard activation (Enter or Space)
-            card.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    window.open(url, '_blank');
-                }
-            });
-        });
-    </script>
+        <div class="timeline-item">
+          <div class="timeline-date">
+            <div class="timeline-year">2022 – 2023</div>
+            <div class="timeline-org">EANA</div>
+          </div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-body">
+            <div class="timeline-role">Lead Developer &amp; Project Manager</div>
+            <div class="timeline-tags">
+              <span class="tag">Project Management</span>
+              <span class="tag">Stakeholder Alignment</span>
+              <span class="tag">Client Communication</span>
+            </div>
+            <p class="timeline-desc">
+              Led development of a national airspace request tracking and analysis platform for Empresa Argentina de Navegación Aérea, serving as both technical lead and project manager.
+            </p>
+            <ul class="timeline-highlights">
+              <li>Coordinated a cross-functional team across design, development, and testing phases.</li>
+              <li>Managed ongoing stakeholder communication with government clients, translating business requirements into measurable technical deliverables.</li>
+              <li>Delivered the platform end-to-end within the defined scope and timeline.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">
+            <div class="timeline-year">2020 – 2023</div>
+            <div class="timeline-org">Pensions &amp; Retirements CBA</div>
+          </div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-body">
+            <div class="timeline-role">IT Technician &amp; Software Developer</div>
+            <div class="timeline-tags">
+              <span class="tag">Internal Tools</span>
+              <span class="tag">Process Automation</span>
+              <span class="tag">Infrastructure</span>
+            </div>
+            <p class="timeline-desc">
+              Built and maintained internal software tools to optimize operational efficiency within a public-sector organization.
+            </p>
+            <ul class="timeline-highlights">
+              <li>Designed and deployed a WhatsApp-based chatbot for internal use, reducing manual inquiry handling.</li>
+              <li>Developed infrastructure management systems including warehouse software and IT asset tracking.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section" id="projects">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-eyebrow">Selected Work</p>
+        <h2>Key Projects</h2>
+        <p class="section-sub">A selection of software delivery projects managed and contributed to across platforms and clients.</p>
+      </div>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="project-type">Lead Porting Developer</div>
+          <div class="project-name">Skinwalker: First Blood</div>
+          <div class="project-meta">Developer: Sismo Games &nbsp;|&nbsp; Publisher: Team17</div>
+          <p class="project-desc">Led porting team delivery across last and current-gen consoles and the Microsoft Store. Most technically demanding project to date, requiring close coordination with Team17's certification and QA pipeline.</p>
+        </div>
+
+        <div class="project-card">
+          <div class="project-type">Porting Developer</div>
+          <div class="project-name">My Little Universe</div>
+          <div class="project-meta">Developer: Estoty &nbsp;|&nbsp; Publisher: SayGames</div>
+          <p class="project-desc">Led the porting team through full multi-platform delivery. The most demanding project in terms of client communication, requirements management, and stakeholder alignment across multiple international parties.</p>
+        </div>
+
+        <div class="project-card">
+          <div class="project-type">Porting Developer</div>
+          <div class="project-name">Storyteller</div>
+          <div class="project-meta">Designer: Daniel Benmergui &nbsp;|&nbsp; Publisher: Annapurna Interactive</div>
+          <p class="project-desc">Contributed to multiple platform ports including the Netflix port, the most downloaded Netflix game of 2023. Coordinated delivery across diverse platform requirements and publisher expectations.</p>
+        </div>
+
+        <div class="project-card">
+          <div class="project-type">Porting Developer</div>
+          <div class="project-name">Elderand</div>
+          <div class="project-meta">Developer: Sinergia / Mantra &nbsp;|&nbsp; Publisher: Graffiti Games</div>
+          <p class="project-desc">Managed the Xbox port delivery, overseeing QA coordination, performance optimization tracking, and certification milestone planning.</p>
+        </div>
+
+        <div class="project-card">
+          <div class="project-type">Porting Developer</div>
+          <div class="project-name">We Need to Go Deeper</div>
+          <div class="project-meta">Developer &amp; Publisher: Deli Interactive / Graffiti Games</div>
+          <p class="project-desc">Managed the Nintendo Switch port, coordinating optimization work and networking bug resolution while tracking progress against certification requirements.</p>
+        </div>
+
+        <div class="project-card">
+          <div class="project-type">Lead Developer & PO</div>
+          <div class="project-name">EANA Airspace Tracker</div>
+          <div class="project-meta">Client: Empresa Argentina de Navegación Aérea</div>
+          <p class="project-desc">End-to-end project management of a government airspace request tracking and analysis platform. Led cross-functional team coordination, requirements definition, and stakeholder reporting for a national-scale system.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section section-dark" id="skills">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-eyebrow">Competencies</p>
+        <h2>Skills &amp; Expertise</h2>
+        <p class="section-sub">Core capabilities built across project delivery, technical leadership, and client-facing roles.</p>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <div class="skill-group-label">Project Management</div>
+          <ul class="skill-list">
+            <li>Project planning &amp; scoping</li>
+            <li>Agile / iterative delivery</li>
+            <li>Risk &amp; dependency tracking</li>
+            <li>Timeline &amp; milestone management</li>
+            <li>Cross-functional team coordination</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Stakeholder &amp; Client</div>
+          <ul class="skill-list">
+            <li>Requirements gathering</li>
+            <li>Executive communication</li>
+            <li>Client relationship management</li>
+            <li>Contract &amp; deliverable alignment</li>
+            <li>Expectation management</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Technical Leadership</div>
+          <ul class="skill-list">
+            <li>Software delivery lifecycle</li>
+            <li>QA &amp; certification management</li>
+            <li>Performance benchmarking</li>
+            <li>Platform compliance (Sony / MS / Nintendo)</li>
+            <li>Technical documentation</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Tools &amp; Stack</div>
+          <ul class="skill-list">
+            <li>Unity Engine / Unreal Engine</li>
+            <li>Python / C# / JavaScript</li>
+            <li>Git &amp; version control</li>
+            <li>Jira / Trello / project tracking tools</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Languages</div>
+          <ul class="skill-list">
+            <li>Spanish — Native</li>
+            <li>English — Professional proficiency - C1 Certified</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-eyebrow">Get in Touch</p>
+        <h2>Let's Work Together</h2>
+        <p class="section-sub">Open to project management roles, technical lead engagements, and consulting opportunities.</p>
+      </div>
+      <div class="contact-row">
+        <a href="https://benjaleonardi.github.io/assets/Leonardi_Benjamin_CV_2026_English_PDF.pdf" target="_blank" class="btn btn-primary">Resume (EN)</a>
+        <a href="https://benjaleonardi.github.io/assets/Leonardi_Benjamin_CV_2026_Spanish_PDF.pdf" target="_blank" class="btn btn-secondary">CV (ES)</a>
+        <a href="https://www.linkedin.com/in/benjamin-maximiliano-leonardi-b9779310a/" target="_blank" class="btn btn-secondary">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-name">Benjamin M. Leonardi</div>
+    <div class="footer-note">Project Manager &amp; Software Developer · Córdoba, Argentina · 2026</div>
+  </footer>
+
 </body>
 </html>
