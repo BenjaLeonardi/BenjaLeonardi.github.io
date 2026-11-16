@@ -357,18 +357,89 @@
       color: var(--gold);
     }
 
-    /* ── PROJECTS ── */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-      gap: 24px;
+    .hero-profile {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      margin-bottom: 40px;
     }
 
+    .hero-profile .hero-bio { margin-bottom: 0; flex: 1; }
+
+    .hero-photo {
+      position: relative;
+      flex-shrink: 0;
+      width: 156px; height: 156px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 0 6px rgba(201, 168, 76, 0.12);
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--slate), var(--steel));
+      display: grid; place-items: center;
+    }
+
+    .hero-photo img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-photo-fallback {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.4rem;
+      color: var(--cream);
+    }
+
+    /* ── PROJECTS ── */
+    .projects-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .projects-head .section-header { margin-bottom: 0; }
+
+    .carousel-controls { display: flex; gap: 10px; flex-shrink: 0; }
+
+    .carousel-btn {
+      width: 44px; height: 44px;
+      display: grid; place-items: center;
+      background: transparent;
+      color: var(--navy);
+      border: 1px solid rgba(26, 36, 48, 0.2);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, opacity 0.2s;
+    }
+
+    .carousel-btn:hover:not(:disabled) { border-color: var(--gold); color: var(--steel); }
+    .carousel-btn:focus-visible, .project-card:focus-visible { outline: 2px solid var(--steel); outline-offset: 3px; }
+    .carousel-btn:disabled { opacity: 0.3; cursor: default; }
+
+    .carousel-track {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      padding: 6px 0 10px;
+    }
+
+    .carousel-track::-webkit-scrollbar { display: none; }
+
     .project-card {
+      flex: 0 0 calc((100% - 48px) / 3);
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      color: inherit;
+      text-decoration: none;
       background: var(--white);
       border: 1px solid rgba(26, 36, 48, 0.1);
       border-radius: 4px;
-      padding: 32px 28px;
+      overflow: hidden;
       transition: border-color 0.2s, transform 0.2s;
     }
 
@@ -376,6 +447,36 @@
       border-color: var(--gold);
       transform: translateY(-3px);
     }
+
+    .project-media {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, var(--slate), var(--steel));
+      overflow: hidden;
+    }
+
+    .project-media img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .project-card:hover .project-media img { transform: scale(1.04); }
+
+    .project-media.no-img img { display: none; }
+
+    .project-open {
+      position: absolute;
+      top: 10px; right: 10px;
+      width: 30px; height: 30px;
+      display: grid; place-items: center;
+      background: rgba(15, 25, 35, 0.78);
+      color: var(--cream);
+      border-radius: 2px;
+    }
+
+    .project-body { padding: 24px 24px 28px; }
 
     .project-type {
       font-size: 0.68rem;
@@ -518,7 +619,14 @@
       footer { flex-direction: column; gap: 10px; text-align: center; padding: 28px 24px; }
     }
 
+    @media (max-width: 900px) {
+      .project-card { flex-basis: calc((100% - 24px) / 2); }
+    }
+
     @media (max-width: 600px) {
+      .hero-profile { flex-direction: column; align-items: flex-start; gap: 24px; }
+      .project-card { flex-basis: 82%; }
+      .projects-head { flex-direction: column; align-items: flex-start; margin-bottom: 28px; }
       .nav-links { display: none; }
       .hero-right { grid-template-columns: 1fr 1fr; gap: 12px; }
       .kpi-value { font-size: 2rem; }
@@ -526,6 +634,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       .hero-left, .hero-right { animation: none; }
+      .project-card, .project-media img { transition: none; }
     }
   </style>
 </head>
@@ -551,9 +660,15 @@
     <div class="hero-left">
       <p class="hero-eyebrow">Desarrollador de Software &amp; Project Manager</p>
       <h1>Benjamin M.<br>Leonardi</h1>
-      <p class="hero-bio">
-        Desarrollador de Software y líder técnico con más de 3 años de experiencia coordinando equipos multidisciplinarios, gestionando la comunicación con stakeholders y entregando proyectos de software a tiempo — desde plataformas gubernamentales hasta títulos AAA internacionales.
-      </p>
+      <div class="hero-profile">
+        <div class="hero-photo">
+          <span class="hero-photo-fallback" aria-hidden="true">BL</span>
+          <img src="images/face.jpg" width="600" height="600" onerror="this.remove()" />
+        </div>
+        <p class="hero-bio">
+          Desarrollador de Software y líder técnico con más de 3 años de experiencia coordinando equipos multidisciplinarios, gestionando la comunicación con stakeholders y entregando proyectos de software a tiempo — desde plataformas gubernamentales hasta títulos AAA internacionales.
+        </p>
+      </div>
       <div class="hero-cta">
         <a href="https://benjaleonardi.github.io/assets/Leonardi_Benjamin_CV_2026_Spanish_PDF.pdf" target="_blank" class="btn btn-primary">Descargar CV</a>
         <a href="https://www.linkedin.com/in/benjamin-maximiliano-leonardi-b9779310a/" target="_blank" class="btn btn-secondary">LinkedIn</a>
@@ -670,55 +785,102 @@
   <!-- PROJECTS -->
   <section class="section" id="proyectos">
     <div class="section-inner">
-      <div class="section-header">
-        <p class="section-eyebrow">Trabajo Seleccionado</p>
-        <h2>Proyectos Destacados</h2>
-        <p class="section-sub">Una selección de proyectos de software gestionados y ejecutados en distintas plataformas y clientes.</p>
+      <div class="projects-head">
+        <div class="section-header">
+          <p class="section-eyebrow">Trabajo Seleccionado</p>
+          <h2>Proyectos Destacados</h2>
+          <p class="section-sub">Una selección de proyectos de software gestionados y ejecutados en distintas plataformas y clientes.</p>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" id="proj-prev" type="button" aria-label="Proyectos anteriores"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+          <button class="carousel-btn" id="proj-next" type="button" aria-label="Proyectos siguientes"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+        </div>
       </div>
-      <div class="projects-grid">
+      <div class="carousel-track" id="proj-track" role="region" aria-label="Carrusel de proyectos destacados">
 
-        <div class="project-card">
-          <div class="project-type">Lead Porting Developer</div>
-          <div class="project-name">Skinwalker: First Blood</div>
-          <div class="project-meta">Desarrolladora: Sismo Games &nbsp;|&nbsp; Publisher: Team17</div>
-          <p class="project-desc">Lideré al equipo de porting en la entrega para consolas de última y nueva generación, además de Microsoft Store. El proyecto técnicamente más exigente a la fecha, con coordinación estrecha con el pipeline de QA y certificación de Team17.</p>
-        </div>
+        <!-- TODO: reemplazar href por el link de Skinwalker: First Blood -->
+        <a class="project-card" href="https://store.steampowered.com/app/3086670/SKINWALKER_First_Blood/?l=spanish" target="_blank" rel="noopener noreferrer">
+          <div class="project-media">
+            <img src="images/projectSkinwalker_wide.jpg" alt="" width="1280" height="720" loading="lazy" />
+            <span class="project-open"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+          </div>
+          <div class="project-body">
+            <div class="project-type">Lead Porting Developer</div>
+            <div class="project-name">Skinwalker: First Blood</div>
+            <div class="project-meta">Desarrolladora: Sismo Games &nbsp;|&nbsp; Publisher: Team17</div>
+            <p class="project-desc">Lideré al equipo de porting en la entrega para consolas de última y nueva generación, además de Microsoft Store. El proyecto técnicamente más exigente a la fecha, con coordinación estrecha con el pipeline de QA y certificación de Team17.</p>
+          </div>
+        </a>
 
-        <div class="project-card">
-          <div class="project-type">Porting Developer</div>
-          <div class="project-name">My Little Universe</div>
-          <div class="project-meta">Desarrolladora: Estoty &nbsp;|&nbsp; Publisher: SayGames</div>
-          <p class="project-desc">Lideré al equipo a través de la entrega multiplataforma completa. El proyecto más exigente en términos de comunicación con el cliente, gestión de requisitos y alineación de stakeholders entre múltiples partes internacionales.</p>
-        </div>
+        <!-- TODO: reemplazar href por el link de My Little Universe -->
+        <a class="project-card" href="https://www.xbox.com/es-AR/games/store/my-little-universe/9mt5c35ccp0q" target="_blank" rel="noopener noreferrer">
+          <div class="project-media">
+            <img src="images/projectMLU_wide.jpg" alt="" width="1280" height="720" loading="lazy" />
+            <span class="project-open"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+          </div>
+          <div class="project-body">
+            <div class="project-type">Porting Developer</div>
+            <div class="project-name">My Little Universe</div>
+            <div class="project-meta">Desarrolladora: Estoty &nbsp;|&nbsp; Publisher: SayGames</div>
+            <p class="project-desc">Lideré al equipo a través de la entrega multiplataforma completa. El proyecto más exigente en términos de comunicación con el cliente, gestión de requisitos y alineación de stakeholders entre múltiples partes internacionales.</p>
+          </div>
+        </a>
 
-        <div class="project-card">
-          <div class="project-type">Porting Developer</div>
-          <div class="project-name">Storyteller</div>
-          <div class="project-meta">Diseñador: Daniel Benmergui &nbsp;|&nbsp; Publisher: Annapurna Interactive</div>
-          <p class="project-desc">Contribuí a múltiples ports de plataforma, incluyendo el port de Netflix, el juego más descargado de Netflix en 2023. Coordiné la entrega entre los distintos requerimientos de plataforma y las expectativas del publisher.</p>
-        </div>
+        <!-- TODO: reemplazar href por el link de Storyteller -->
+        <a class="project-card" href="https://www.netflix.com/ar-en/games/81569948" target="_blank" rel="noopener noreferrer">
+          <div class="project-media">
+            <img src="images/projectStoryteller_wide.jpg" alt="" width="1280" height="720" loading="lazy" />
+            <span class="project-open"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+          </div>
+          <div class="project-body">
+            <div class="project-type">Porting Developer</div>
+            <div class="project-name">Storyteller</div>
+            <div class="project-meta">Diseñador: Daniel Benmergui &nbsp;|&nbsp; Publisher: Annapurna Interactive</div>
+            <p class="project-desc">Contribuí a múltiples ports de plataforma, incluyendo el port de Netflix, el juego más descargado de Netflix en 2023. Coordiné la entrega entre los distintos requerimientos de plataforma y las expectativas del publisher.</p>
+          </div>
+        </a>
 
-        <div class="project-card">
-          <div class="project-type">Porting Developer</div>
-          <div class="project-name">Elderand</div>
-          <div class="project-meta">Desarrolladora: Sinergia / Mantra &nbsp;|&nbsp; Publisher: Graffiti Games</div>
-          <p class="project-desc">Gestioné la entrega del port para Xbox: coordinación del equipo de QA, seguimiento de optimización de rendimiento y planificación de los hitos de certificación.</p>
-        </div>
+        <!-- TODO: reemplazar href por el link de Elderand -->
+        <a class="project-card" href="https://www.xbox.com/es-AR/games/store/elderand/9pmkjdsdk77c" target="_blank" rel="noopener noreferrer">
+          <div class="project-media">
+            <img src="images/projectElderand_wide.jpg" alt="" width="1280" height="720" loading="lazy" />
+            <span class="project-open"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+          </div>
+          <div class="project-body">
+            <div class="project-type">Porting Developer</div>
+            <div class="project-name">Elderand</div>
+            <div class="project-meta">Desarrolladora: Sinergia / Mantra &nbsp;|&nbsp; Publisher: Graffiti Games</div>
+            <p class="project-desc">Gestioné la entrega del port para Xbox: coordinación del equipo de QA, seguimiento de optimización de rendimiento y planificación de los hitos de certificación.</p>
+          </div>
+        </a>
 
-        <div class="project-card">
-          <div class="project-type">Porting Developer</div>
-          <div class="project-name">We Need to Go Deeper</div>
-          <div class="project-meta">Desarrolladora y Publisher: Deli Interactive / Graffiti Games</div>
-          <p class="project-desc">Gestioné el port para Nintendo Switch, coordinando el trabajo de optimización y la resolución de bugs de networking, con seguimiento de avances respecto a los requisitos de certificación.</p>
-        </div>
+        <!-- TODO: reemplazar href por el link de We Need to Go Deeper -->
+        <a class="project-card" href="https://www.nintendo.com/es-ar/store/products/we-need-to-go-deeper-switch/" target="_blank" rel="noopener noreferrer">
+          <div class="project-media">
+            <img src="images/projectWNTGD_wide.jpg" alt="" width="1280" height="720" loading="lazy" />
+            <span class="project-open"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+          </div>
+          <div class="project-body">
+            <div class="project-type">Porting Developer</div>
+            <div class="project-name">We Need to Go Deeper</div>
+            <div class="project-meta">Desarrolladora y Publisher: Deli Interactive / Graffiti Games</div>
+            <p class="project-desc">Gestioné el port para Nintendo Switch, coordinando el trabajo de optimización y la resolución de bugs de networking, con seguimiento de avances respecto a los requisitos de certificación.</p>
+          </div>
+        </a>
 
-        <div class="project-card">
-          <div class="project-type">PO & Desarrollador</div>
-          <div class="project-name">Plataforma de Espacio Aéreo EANA</div>
-          <div class="project-meta">Cliente: Empresa Argentina de Navegación Aérea</div>
-          <p class="project-desc">Gestión integral del proyecto para una plataforma gubernamental de seguimiento y análisis de solicitudes de espacio aéreo. Coordinación de equipos, definición de requisitos e informes de seguimiento para un sistema de escala nacional.</p>
-        </div>
-
+        <!-- TODO: reemplazar href por el link de Plataforma de Espacio Aéreo EANA -->
+        <a class="project-card" href="https://www.institucional.frc.utn.edu.ar/SISTEMAS/NOTICIAS/PF/PROYECTOS/6DB_5k3g08_reapp_2022_(1).pdf" target="_blank" rel="noopener noreferrer">
+          <div class="project-media">
+            <img src="images/projectReapp_wide.jpg" alt="" width="1280" height="720" loading="lazy" />
+            <span class="project-open"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+          </div>
+          <div class="project-body">
+            <div class="project-type">PO & Desarrollador</div>
+            <div class="project-name">Plataforma de Espacio Aéreo EANA</div>
+            <div class="project-meta">Cliente: Empresa Argentina de Navegación Aérea</div>
+            <p class="project-desc">Gestión integral del proyecto para una plataforma gubernamental de seguimiento y análisis de solicitudes de espacio aéreo. Coordinación de equipos, definición de requisitos e informes de seguimiento para un sistema de escala nacional.</p>
+          </div>
+        </a>
       </div>
     </div>
   </section>
@@ -804,5 +966,43 @@
     <div class="footer-note">Project Manager &amp; Desarrollador de Software · Córdoba, Argentina · 2026</div>
   </footer>
 
+  <script>
+    (function () {
+      var track = document.getElementById('proj-track');
+      var prev = document.getElementById('proj-prev');
+      var next = document.getElementById('proj-next');
+      if (!track) return;
+
+      // Hide the <img> (keeping the gradient) if an image fails to load
+      track.querySelectorAll('.project-media img').forEach(function (img) {
+        function fail() { img.parentElement.classList.add('no-img'); }
+        img.addEventListener('error', fail);
+        if (img.complete && img.naturalWidth === 0) fail();
+      });
+
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function step() {
+        var card = track.querySelector('.project-card');
+        var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+        return card.getBoundingClientRect().width + gap;
+      }
+
+      function update() {
+        prev.disabled = track.scrollLeft <= 4;
+        next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+      }
+
+      function go(dir) {
+        track.scrollBy({ left: dir * step(), behavior: reduce ? 'auto' : 'smooth' });
+      }
+
+      prev.addEventListener('click', function () { go(-1); });
+      next.addEventListener('click', function () { go(1); });
+      track.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
+  </script>
 </body>
 </html>
